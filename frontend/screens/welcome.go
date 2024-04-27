@@ -1,8 +1,8 @@
 package screens
 
 import (
+	"godl/backend/events"
 	"godl/frontend/components"
-	"godl/frontend/events"
 	"godl/frontend/widgets"
 
 	"github.com/gdamore/tcell/v2"
@@ -10,12 +10,14 @@ import (
 )
 
 type Welcome_s struct {
-	App *tview.Application
+	App      *tview.Application
+	mediator *events.Mediator
 }
 
-func NewWelcomeScreen(a *tview.Application) *Welcome_s {
+func NewWelcomeScreen(a *tview.Application, m events.Mediator) *Welcome_s {
 	return &Welcome_s{
-		App: a,
+		App:      a,
+		mediator: &m,
 	}
 }
 
@@ -37,6 +39,6 @@ func (s *Welcome_s) Draw() {
 }
 
 func (s *Welcome_s) HandleEvents(event *tcell.EventKey) *tcell.EventKey {
-	m := events.NewGenericMediator(s.App)
-	return m.Handle(event)
+	s.mediator.Handle(event.Rune())
+	return event
 }

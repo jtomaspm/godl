@@ -1,6 +1,8 @@
 package app
 
 import (
+	"godl/backend/events"
+	"godl/frontend/model"
 	"godl/frontend/screens"
 
 	"github.com/rivo/tview"
@@ -19,19 +21,22 @@ func NewAppContext() *AppContext {
 	a := tview.NewApplication()
 	ac := &AppContext{
 		App:          a,
-		CurrentSreen: screens.NewWelcomeScreen(a),
+		CurrentSreen: screens.NewWelcomeScreen(a, *baseMediator(a)),
 	}
 	ac.initApp()
 	return ac
 }
 
-func NewAppContextFromApp(a *tview.Application) *AppContext {
-	ac := &AppContext{
-		App:          a,
-		CurrentSreen: screens.NewWelcomeScreen(a),
-	}
-	ac.initApp()
-	return ac
+func baseMediator(app *tview.Application) *events.Mediator {
+	m := events.NewMediator()
+	m.Addhandler(model.Action{
+		DisplayTxt: "Quit",
+		Hotkey:     'q',
+		Execute: func() {
+			app.Stop()
+		},
+	})
+	return m
 }
 
 func (ac *AppContext) Run() error {
