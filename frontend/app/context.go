@@ -3,6 +3,7 @@ package app
 import (
 	"godl/backend/events"
 	"godl/backend/model"
+	"godl/frontend/components"
 	"godl/frontend/router"
 	"godl/frontend/screens"
 
@@ -12,6 +13,7 @@ import (
 type AppContext struct {
 	app    *tview.Application
 	router router.Router
+	navBar *components.NavBarComponent
 }
 
 func (ac *AppContext) initApp() {
@@ -19,7 +21,7 @@ func (ac *AppContext) initApp() {
 }
 
 func (ac *AppContext) addRoutes() {
-	ac.router.AddRoute("welcome", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app)))
+	ac.router.AddRoute("welcome", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar))
 }
 
 func NewAppContext() *AppContext {
@@ -27,8 +29,10 @@ func NewAppContext() *AppContext {
 	ac := &AppContext{
 		app:    a,
 		router: *router.NewRouter(),
+		navBar: components.NewNavBarComponent(),
 	}
 	ac.addRoutes()
+	ac.setupNavBar()
 	ac.initApp()
 	return ac
 }
@@ -45,6 +49,12 @@ func baseMediator(app *tview.Application) *events.Mediator {
 	})
 
 	return m
+}
+
+func (ac *AppContext) setupNavBar() {
+	ac.navBar.AddTab(*components.NewTabComponent("welcome", ac.router.GetResolution("welcome")))
+	ac.navBar.AddTab(*components.NewTabComponent("settings", func() {}))
+	ac.navBar.SetActive("welcome")
 }
 
 func (ac *AppContext) Run() error {

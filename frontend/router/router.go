@@ -21,3 +21,7 @@ func (m *Router) Draw(r route) {
 func (m *Router) AddRoute(r route, s screens.Screen) {
 	m.routes[r] = s
 }
+
+func (m *Router) GetResolution(r route) func() {
+	return m.routes[r].Draw
+}

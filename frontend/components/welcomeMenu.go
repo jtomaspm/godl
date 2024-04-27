@@ -43,6 +43,13 @@ func NewWelcomeMenuComponent(actions []model.Action) *WelcomeMenuComponent {
 					}
 				},
 			},
+			{
+				DisplayTxt: "Execute Selection",
+				Hotkey:     ' ',
+				Execute: func() {
+					actions[widgets.GetCurrentItem()].Execute()
+				},
+			},
 		},
 	}
 }

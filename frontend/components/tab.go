@@ -5,17 +5,19 @@ import "github.com/rivo/tview"
 type TabComponent struct {
 	Component *tview.TextView
 	label     string
+	callback  func()
 }
 
-func NewTabComponent(label string) *TabComponent {
+func NewTabComponent(label string, callback func()) *TabComponent {
 	b := tview.NewTextView().
 		SetText(label).
-		SetTextAlign(tview.AlignCenter).
+		SetTextAlign(tview.AlignLeft).
 		SetDynamicColors(true)
 
 	c := TabComponent{
 		Component: b,
 		label:     label,
+		callback:  callback,
 	}
 
 	c.SetInactive()
@@ -29,7 +31,7 @@ func (t *TabComponent) SetActive() {
 }
 
 func (t *TabComponent) SetInactive() {
-	t.Component.SetBackgroundColor(tview.Styles.ContrastBackgroundColor)
+	t.Component.SetBackgroundColor(tview.Styles.PrimitiveBackgroundColor)
 	t.Component.SetTextColor(tview.Styles.PrimaryTextColor)
 }
 
@@ -47,4 +49,8 @@ func PlaceholderTab() *TabComponent {
 	c.SetInactive()
 
 	return &c
+}
+
+func (t *TabComponent) Activate() {
+	t.callback()
 }
