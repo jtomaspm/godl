@@ -9,7 +9,7 @@ func WelcomeWidgets(topBar *components.TopBarComponent) []model.Action {
 	return []model.Action{
 		{
 			DisplayTxt: "Change working directory",
-			Hotkey:     '1',
+			Hotkey:     'c',
 			Execute: func() {
 				topBar.SetStatus("Test 1")
 			},

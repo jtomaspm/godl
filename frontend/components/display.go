@@ -1,6 +1,8 @@
 package components
 
 import (
+	"godl/backend/model"
+
 	"github.com/rivo/tview"
 )
 
@@ -28,4 +30,8 @@ func NewDisplayComponent() *DisplayComponent {
 			SetTextAlign(tview.AlignCenter).
 			SetDynamicColors(true),
 	}
+}
+
+func (b *DisplayComponent) GetActions() []model.Action {
+	return []model.Action{}
 }

@@ -36,7 +36,7 @@ func NewAppContext() *AppContext {
 func baseMediator(app *tview.Application) *events.Mediator {
 	m := events.NewMediator()
 
-	m.AddHandler(model.Action{
+	m.AddHandler(&model.Action{
 		DisplayTxt: "Quit",
 		Hotkey:     'q',
 		Execute: func() {

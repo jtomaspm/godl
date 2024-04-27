@@ -1,6 +1,10 @@
 package components
 
-import "github.com/rivo/tview"
+import (
+	"godl/backend/model"
+
+	"github.com/rivo/tview"
+)
 
 func StatusBar(val string) *tview.TextView {
 	b := tview.NewTextView().
@@ -38,4 +42,8 @@ func (b *TopBarComponent) SetStatus(status string) {
 	b.app.QueueUpdateDraw(func() {
 		b.StatusBar.SetText(status)
 	})
+}
+
+func (b *TopBarComponent) GetActions() []model.Action {
+	return []model.Action{}
 }
