@@ -11,35 +11,35 @@ func WelcomeWidgets(statusBar *components.StatusBarComponent) []model.Action {
 			DisplayTxt: "Change working directory",
 			Hotkey:     'f',
 			Execute: func() {
-				statusBar.SetStatus("Test 1")
+				statusBar.SetStatusNL("Test 1")
 			},
 		},
 		{
 			DisplayTxt: "Test 2",
 			Hotkey:     '2',
 			Execute: func() {
-				statusBar.SetStatus("Test 2")
+				statusBar.SetStatusNL("Test 2")
 			},
 		},
 		{
 			DisplayTxt: "Test 3",
 			Hotkey:     '3',
 			Execute: func() {
-				statusBar.SetStatus("Test 3")
+				statusBar.SetStatusNL("Test 3")
 			},
 		},
 		{
 			DisplayTxt: "Test 4",
 			Hotkey:     '4',
 			Execute: func() {
-				statusBar.SetStatus("Test 4")
+				statusBar.SetStatusNL("Test 4")
 			},
 		},
 		{
 			DisplayTxt: "Test 5",
 			Hotkey:     '5',
 			Execute: func() {
-				statusBar.SetStatus("Test 5")
+				statusBar.SetStatusNL("Test 5")
 			},
 		},
 	}

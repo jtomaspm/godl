@@ -11,40 +11,40 @@ import (
 )
 
 type Welcome_s struct {
-	App      *tview.Application
+	app      *tview.Application
 	mediator *events.Mediator
 	actions  []model.Action
 }
 
 func NewWelcomeScreen(a *tview.Application, m events.Mediator) *Welcome_s {
 	return &Welcome_s{
-		App:      a,
+		app:      a,
 		mediator: &m,
 	}
 }
 
 func (s *Welcome_s) Draw() {
-	topBar := components.NewTopBarComponent(s.App)
+	topBar := components.NewTopBarComponent()
 	s.actions = append(s.actions, topBar.GetActions()...)
 
 	display := components.NewDisplayComponent()
 	s.actions = append(s.actions, display.GetActions()...)
 
-	statusBar := components.NewStatusBarComponent("Welcome to godl :)")
-	s.actions = append(s.actions, statusBar.GetActions()...)
+	bottomBar := components.NewBottomBarComponent("\nWelcome to godl :)", s.app)
+	s.actions = append(s.actions, bottomBar.GetActions()...)
 
-	mainMenu := components.NewMainMenuComponent(widgets.WelcomeWidgets(statusBar))
+	mainMenu := components.NewMainMenuComponent(widgets.WelcomeWidgets(bottomBar.Status))
 	s.actions = append(s.actions, mainMenu.GetActions()...)
 
 	layout := tview.NewFlex().SetDirection(tview.FlexRow).
-		AddItem(topBar.Component, 0, 1, false).
-		AddItem(display.Component, 0, 8, false).
-		AddItem(mainMenu.Component, 0, 9, false).
-		AddItem(statusBar.Component, 0, 1, false)
+		AddItem(topBar.Component, 0, 2, false).
+		AddItem(display.Component, 0, 10, false).
+		AddItem(mainMenu.Component, 0, 12, false).
+		AddItem(bottomBar.Component, 0, 1, false)
 
-	s.App.SetRoot(layout, true)
+	s.app.SetRoot(layout, true)
 	s.mediator.AddHandlers(s.actions)
-	s.App.SetInputCapture(s.HandleEvents)
+	s.app.SetInputCapture(s.HandleEvents)
 }
 
 func (s *Welcome_s) HandleEvents(event *tcell.EventKey) *tcell.EventKey {

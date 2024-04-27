@@ -25,6 +25,10 @@ func (b *StatusBarComponent) SetStatus(status string) {
 	b.Component.SetText(status)
 }
 
+func (b *StatusBarComponent) SetStatusNL(status string) {
+	b.Component.SetText("\n" + status)
+}
+
 func (b *StatusBarComponent) GetActions() []model.Action {
 	return []model.Action{}
 }

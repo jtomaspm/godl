@@ -7,22 +7,14 @@ import (
 )
 
 type TopBarComponent struct {
-	Component *tview.Grid
-	Clock     *tview.TextView
-	app       *tview.Application
+	Component *tview.Flex
 }
 
-func NewTopBarComponent(app *tview.Application) *TopBarComponent {
-	widgets := tview.NewGrid().SetBorders(false)
-	c := Clock(app).SetTextAlign(tview.AlignRight)
-
-	widgets.AddItem(tview.NewTextView().SetText(" [1][2]").SetTextAlign(tview.AlignLeft), 0, 0, 1, 15, 0, 0, false)
-	widgets.AddItem(c, 0, 15, 1, 2, 0, 0, false)
+func NewTopBarComponent() *TopBarComponent {
+	widgets := tview.NewFlex()
 
 	return &TopBarComponent{
 		Component: widgets,
-		Clock:     c,
-		app:       app,
 	}
 }
 
