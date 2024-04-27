@@ -2,7 +2,7 @@ package app
 
 import (
 	"godl/backend/events"
-	"godl/frontend/model"
+	"godl/backend/model"
 	"godl/frontend/screens"
 
 	"github.com/rivo/tview"
@@ -29,6 +29,7 @@ func NewAppContext() *AppContext {
 
 func baseMediator(app *tview.Application) *events.Mediator {
 	m := events.NewMediator()
+
 	m.AddHandler(model.Action{
 		DisplayTxt: "Quit",
 		Hotkey:     'q',
@@ -36,6 +37,7 @@ func baseMediator(app *tview.Application) *events.Mediator {
 			app.Stop()
 		},
 	})
+
 	return m
 }
 

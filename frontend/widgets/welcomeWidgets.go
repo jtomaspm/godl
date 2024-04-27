@@ -1,8 +1,8 @@
 package widgets
 
 import (
+	"godl/backend/model"
 	"godl/frontend/components"
-	"godl/frontend/model"
 )
 
 func WelcomeWidgets(topBar *components.TopBarComponent) []model.Action {

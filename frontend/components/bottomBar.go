@@ -1,7 +1,7 @@
 package components
 
 import (
-	"godl/frontend/model"
+	"godl/backend/model"
 
 	"github.com/rivo/tview"
 )

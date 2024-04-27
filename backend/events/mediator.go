@@ -1,7 +1,7 @@
 package events
 
 import (
-	"godl/frontend/model"
+	"godl/backend/model"
 )
 
 type Mediator struct {

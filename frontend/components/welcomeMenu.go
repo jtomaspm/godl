@@ -2,7 +2,7 @@ package components
 
 import (
 	"fmt"
-	"godl/frontend/model"
+	"godl/backend/model"
 
 	"github.com/rivo/tview"
 )
