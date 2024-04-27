@@ -18,6 +18,6 @@ func (m *Mediator) Handle(event rune) {
 	m.handlers[event].Execute()
 }
 
-func (m *Mediator) Addhandler(handler model.Action) {
+func (m *Mediator) AddHandler(handler model.Action) {
 	m.handlers[handler.Hotkey] = handler
 }
