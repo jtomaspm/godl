@@ -13,7 +13,7 @@ func Clock(app *tview.Application) *tview.TextView {
 	go func() {
 		for {
 			now := time.Now()
-			currentTime := now.Format("15:04:05")
+			currentTime := now.Format("15:04:05 ")
 			app.QueueUpdateDraw(func() {
 				b.SetText(currentTime)
 			})
