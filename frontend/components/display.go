@@ -4,9 +4,28 @@ import (
 	"github.com/rivo/tview"
 )
 
-func DisplayScreen() *tview.TextView {
-	return tview.NewTextView().
-		SetText("").
-		SetTextAlign(tview.AlignCenter).
-		SetDynamicColors(true)
+const catArt = `
+ /^--^\     /^--^\     /^--^\
+ \____/     \____/     \____/
+ /      \   /      \   /      \
+ |        | |        | |        |
+ \__  __/   \__  __/   \__  __/
+ |^|^|^|^|^|^|^|^|^|^|^|^\ \^|^|^|^/ /^|^|^|^|^\ \^|^|^|^|^|^|^|^|^|^|^|^|
+ | | | | | | | | | | | | |\ \| | |/ /| | | | | | \ \ | | | | | | | | | | |
+ ########################/ /######\ \###########/ /#######################
+ | | | | | | | | | | | | \/| | | | \/| | | | | |\/ | | | | | | | | | | | |
+ |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+`
+
+type DisplayComponent struct {
+	Component *tview.TextView
+}
+
+func NewDisplayComponent() *DisplayComponent {
+	return &DisplayComponent{
+		Component: tview.NewTextView().
+			SetText(catArt).
+			SetTextAlign(tview.AlignCenter).
+			SetDynamicColors(true),
+	}
 }

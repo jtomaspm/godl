@@ -20,24 +20,16 @@ func NewWelcomeScreen(a *tview.Application) *Welcome_s {
 }
 
 func (s *Welcome_s) Draw() {
+	topBar := components.NewTopBarComponent(s.App)
 
-	topBar := components.TopBar(s.App)
+	display := components.NewDisplayComponent()
 
-	display := components.DisplayScreen()
+	bottomBar := components.NewBottomBarComponent(widgets.WelcomeWidgets(topBar))
 
-	bottomBar := []tview.Primitive{}
-
-	bottomBar = append(bottomBar, components.StatusBar("w1"))
-	bottomBar = append(bottomBar, components.WelcomeMenu(widgets.WelcomeWidgets()))
-	bottomBar = append(bottomBar, components.StatusBar("w3"))
-
-	wb := components.WidgetBar(bottomBar, false)
-
-	// Add the top bar and grid to the application layout.
 	layout := tview.NewFlex().SetDirection(tview.FlexRow).
-		AddItem(topBar, 0, 1, false).
-		AddItem(display, 0, 4, false).
-		AddItem(wb, 0, 8, false)
+		AddItem(topBar.Component, 0, 1, false).
+		AddItem(display.Component, 0, 5, false).
+		AddItem(bottomBar.Component, 0, 7, false)
 
 	s.App.SetRoot(layout, true)
 
