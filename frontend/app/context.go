@@ -5,6 +5,7 @@ import (
 	"godl/backend/model"
 	"godl/frontend/components"
 	"godl/frontend/router"
+	"godl/frontend/screens"
 
 	"github.com/rivo/tview"
 )
@@ -15,12 +16,6 @@ type AppContext struct {
 	router *router.Router
 }
 
-func (ac *AppContext) initApp() {
-}
-
-func (ac *AppContext) addRoutes() {
-}
-
 func NewAppContext() *AppContext {
 	a := tview.NewApplication()
 	r := router.NewRouter()
@@ -29,8 +24,6 @@ func NewAppContext() *AppContext {
 		navBar: components.NewNavBarComponent(r),
 		router: r,
 	}
-	ac.addRoutes()
-	ac.setupNavBar()
 	ac.initApp()
 	return ac
 }
@@ -49,8 +42,14 @@ func baseMediator(app *tview.Application) *events.Mediator {
 	return m
 }
 
-func (ac *AppContext) setupNavBar() {
-	ac.navBar.SetActive("welcome")
+func (ac *AppContext) initApp() {
+
+	ac.navBar.AddTab("welcome", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar).Draw)
+	ac.navBar.AddTab("settings", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar).Draw)
+
+	if err := ac.navBar.SetCurrent(0); err == nil {
+		ac.navBar.DrawCurrent()
+	}
 }
 
 func (ac *AppContext) Run() error {

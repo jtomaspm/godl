@@ -1,25 +1,23 @@
 package router
 
-type route string
-
 type Router struct {
-	routes map[route]func()
+	routes map[string]func()
 }
 
 func NewRouter() *Router {
 	return &Router{
-		routes: make(map[route]func()),
+		routes: make(map[string]func()),
 	}
 }
 
-func (m *Router) Draw(r route) {
+func (m *Router) Draw(r string) {
 	m.routes[r]()
 }
 
-func (m *Router) AddRoute(r route, callback func()) {
+func (m *Router) AddRoute(r string, callback func()) {
 	m.routes[r] = callback
 }
 
-func (m *Router) GetResolution(r route) func() {
+func (m *Router) GetResolution(r string) func() {
 	return m.routes[r]
 }

@@ -16,28 +16,28 @@ func WelcomeWidgets(statusBar *components.StatusBarComponent) []model.Action {
 		},
 		{
 			DisplayTxt: "Test 2",
-			Hotkey:     '2',
+			Hotkey:     'z',
 			Execute: func() {
 				statusBar.SetStatusNL("Test 2")
 			},
 		},
 		{
 			DisplayTxt: "Test 3",
-			Hotkey:     '3',
+			Hotkey:     'x',
 			Execute: func() {
 				statusBar.SetStatusNL("Test 3")
 			},
 		},
 		{
 			DisplayTxt: "Test 4",
-			Hotkey:     '4',
+			Hotkey:     'c',
 			Execute: func() {
 				statusBar.SetStatusNL("Test 4")
 			},
 		},
 		{
 			DisplayTxt: "Test 5",
-			Hotkey:     '5',
+			Hotkey:     'v',
 			Execute: func() {
 				statusBar.SetStatusNL("Test 5")
 			},
