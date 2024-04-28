@@ -1,8 +1,8 @@
-package navBar
+package components
 
 import (
 	"godl/backend/model"
-	"godl/frontend/components"
+	"godl/frontend/router"
 	"log"
 
 	"github.com/rivo/tview"
@@ -14,23 +14,23 @@ type NavBarComponent struct {
 	margin        *tview.TextView
 	maxTabs       int
 	active        string
-	tabComponents []components.TabComponent
-	router        *Router
+	tabComponents []TabComponent
+	router        *router.Router
 }
 
-func NewNavBarComponent() *NavBarComponent {
+func NewNavBarComponent(r *router.Router) *NavBarComponent {
 
 	bar := tview.NewFlex()
 	widgets := tview.NewFlex()
 
 	barComponent := NavBarComponent{
 		Component:     bar,
-		margin:        components.PlaceholderTab().Component,
+		margin:        PlaceholderTab().Component,
 		tabs:          widgets,
-		tabComponents: []components.TabComponent{},
+		tabComponents: []TabComponent{},
 		maxTabs:       12,
 		active:        "",
-		router:        NewRouter(),
+		router:        r,
 	}
 	barComponent.resizeComponent()
 	return &barComponent
@@ -46,7 +46,7 @@ func (b *NavBarComponent) GetActions() []model.Action {
 	return []model.Action{}
 }
 
-func (b *NavBarComponent) AddTab(tab components.TabComponent) {
+func (b *NavBarComponent) AddTab(tab TabComponent) {
 	b.tabs.AddItem(tab.Component, 0, 1, false)
 	b.tabComponents = append(b.tabComponents, tab)
 	b.resizeComponent()
