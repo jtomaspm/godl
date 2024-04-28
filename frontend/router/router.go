@@ -1,4 +1,4 @@
-package navBar
+package router
 
 import "godl/frontend/screens"
 
