@@ -31,6 +31,21 @@ func NewNavBarComponent(r *router.Router) *NavBarComponent {
 	return &barComponent
 }
 
+func (b *NavBarComponent) updateCurrent(curr int) {
+	if curr < 0 || curr >= b.tabs.GetItemCount() {
+		return
+	}
+	b.currentTab = curr
+	for i := 0; i < b.tabs.GetItemCount(); i++ {
+		tab := b.tabs.GetItem(i).(*tview.TextView)
+		if i == b.currentTab {
+			SetTabActive(tab)
+		} else {
+			SetTabInactive(tab)
+		}
+	}
+}
+
 func (b *NavBarComponent) resizeComponent() {
 	b.Component.Clear().
 		AddItem(b.tabs, 0, b.tabs.GetItemCount(), false).
@@ -38,16 +53,43 @@ func (b *NavBarComponent) resizeComponent() {
 }
 
 func (b *NavBarComponent) GetActions() []model.Action {
-	return []model.Action{
-		{
-			DisplayTxt: "Tab 1",
-			Hotkey:     '1',
+	// Manual tab switch
+	actions := []model.Action{}
+	for i := 1; i <= 9; i++ {
+		actions = append(actions, model.Action{
+			DisplayTxt: fmt.Sprintf("Tab %d", i),
+			Hotkey:     rune(i),
 			Execute: func() {
-				b.SetCurrent(1)
+				b.SetCurrent(i - 1)
 				b.DrawCurrent()
 			},
-		},
+		})
 	}
+	actions = append(actions, model.Action{
+		DisplayTxt: "Tab 10",
+		Hotkey:     '0',
+		Execute: func() {
+			b.SetCurrent(9)
+			b.DrawCurrent()
+		},
+	})
+
+	// Dynamic tab switch
+	actions = append(actions, model.Action{
+		DisplayTxt: "Next Tab",
+		Hotkey:     '.',
+		Execute: func() {
+			b.NextTab()
+		},
+	})
+	actions = append(actions, model.Action{
+		DisplayTxt: "Previous Tab",
+		Hotkey:     ',',
+		Execute: func() {
+			b.PreviousTab()
+		},
+	})
+	return actions
 }
 
 func (b *NavBarComponent) AddTab(label string, callback func()) error {
@@ -66,7 +108,7 @@ func (b *NavBarComponent) SetCurrent(curr int) error {
 	if curr < 0 || curr >= b.tabs.GetItemCount() {
 		return fmt.Errorf("invalid current value: %d", curr)
 	}
-	b.currentTab = curr
+	b.updateCurrent(curr)
 	return nil
 }
 
@@ -86,10 +128,10 @@ func (b *NavBarComponent) NextTab() {
 			return
 		}
 		if b.currentTab >= totalTabs-1 {
-			b.currentTab = 0
+			b.updateCurrent(0)
 			return
 		}
-		b.currentTab += 1
+		b.updateCurrent(b.currentTab + 1)
 	}
 	calcNext(b)
 	b.DrawCurrent()
@@ -102,10 +144,10 @@ func (b *NavBarComponent) PreviousTab() {
 			return
 		}
 		if b.currentTab == 0 {
-			b.currentTab = totalTabs - 1
+			b.updateCurrent(totalTabs - 1)
 			return
 		}
-		b.currentTab -= 1
+		b.updateCurrent(b.currentTab - 1)
 	}
 	calcPrev(b)
 	b.DrawCurrent()
