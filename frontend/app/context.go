@@ -47,8 +47,8 @@ func (ac *AppContext) initApp() {
 	ac.navBar.AddTab("welcome", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar).Draw)
 	ac.navBar.AddTab("settings", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar).Draw)
 
-	if err := ac.navBar.SetCurrent(0); err == nil {
-		ac.navBar.DrawCurrent()
+	if err := ac.navBar.SetCurrent(0); err != nil {
+		panic(err)
 	}
 }
 
