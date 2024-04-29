@@ -12,27 +12,18 @@ import (
 
 type AppContext struct {
 	app    *tview.Application
-	router router.Router
 	navBar *components.NavBarComponent
-}
-
-func (ac *AppContext) initApp() {
-	ac.router.Draw("welcome")
-}
-
-func (ac *AppContext) addRoutes() {
-	ac.router.AddRoute("welcome", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar))
+	router *router.Router
 }
 
 func NewAppContext() *AppContext {
 	a := tview.NewApplication()
+	r := router.NewRouter()
 	ac := &AppContext{
 		app:    a,
-		router: *router.NewRouter(),
-		navBar: components.NewNavBarComponent(),
+		navBar: components.NewNavBarComponent(r),
+		router: r,
 	}
-	ac.addRoutes()
-	ac.setupNavBar()
 	ac.initApp()
 	return ac
 }
@@ -51,10 +42,14 @@ func baseMediator(app *tview.Application) *events.Mediator {
 	return m
 }
 
-func (ac *AppContext) setupNavBar() {
-	ac.navBar.AddTab(*components.NewTabComponent("welcome", ac.router.GetResolution("welcome")))
-	ac.navBar.AddTab(*components.NewTabComponent("settings", func() {}))
-	ac.navBar.SetActive("welcome")
+func (ac *AppContext) initApp() {
+
+	ac.navBar.AddTab("welcome", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar).Draw)
+	ac.navBar.AddTab("settings", screens.NewWelcomeScreen(ac.app, *baseMediator(ac.app), ac.navBar).Draw)
+
+	if err := ac.navBar.SetCurrent(0); err != nil {
+		panic(err)
+	}
 }
 
 func (ac *AppContext) Run() error {

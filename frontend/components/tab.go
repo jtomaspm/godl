@@ -20,19 +20,19 @@ func NewTabComponent(label string, callback func()) *TabComponent {
 		callback:  callback,
 	}
 
-	c.SetInactive()
+	SetTabInactive(c.Component)
 
 	return &c
 }
 
-func (t *TabComponent) SetActive() {
-	t.Component.SetBackgroundColor(tview.Styles.PrimitiveBackgroundColor)
-	t.Component.SetTextColor(tview.Styles.ContrastBackgroundColor)
+func SetTabActive(t *tview.TextView) {
+	t.SetBackgroundColor(tview.Styles.PrimitiveBackgroundColor)
+	t.SetTextColor(tview.Styles.ContrastBackgroundColor)
 }
 
-func (t *TabComponent) SetInactive() {
-	t.Component.SetBackgroundColor(tview.Styles.PrimitiveBackgroundColor)
-	t.Component.SetTextColor(tview.Styles.PrimaryTextColor)
+func SetTabInactive(t *tview.TextView) {
+	t.SetBackgroundColor(tview.Styles.PrimitiveBackgroundColor)
+	t.SetTextColor(tview.Styles.PrimaryTextColor)
 }
 
 func PlaceholderTab() *TabComponent {
@@ -46,7 +46,7 @@ func PlaceholderTab() *TabComponent {
 		label:     "",
 	}
 
-	c.SetInactive()
+	SetTabInactive(c.Component)
 
 	return &c
 }

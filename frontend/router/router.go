@@ -1,27 +1,23 @@
 package router
 
-import "godl/frontend/screens"
-
-type route string
-
 type Router struct {
-	routes map[route]screens.Screen
+	routes map[string]func()
 }
 
 func NewRouter() *Router {
 	return &Router{
-		routes: make(map[route]screens.Screen),
+		routes: make(map[string]func()),
 	}
 }
 
-func (m *Router) Draw(r route) {
-	m.routes[r].Draw()
+func (m *Router) Draw(r string) {
+	m.routes[r]()
 }
 
-func (m *Router) AddRoute(r route, s screens.Screen) {
-	m.routes[r] = s
+func (m *Router) AddRoute(r string, callback func()) {
+	m.routes[r] = callback
 }
 
-func (m *Router) GetResolution(r route) func() {
-	return m.routes[r].Draw
+func (m *Router) GetResolution(r string) func() {
+	return m.routes[r]
 }
